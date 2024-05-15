@@ -101,7 +101,54 @@ responses:
       {%- endif %}
     no_entity: "Désolé, je ne connais pas l'appareil {{ entity }}"
     no_entity_in_area: "Désolé, je ne connais pas l'appareil {{ entity }}"
-
+    no_floor: "Désolé, je ne connais pas l'étage {{ floor }}"
+    no_domain_in_floor: |
+      {% set translations = {
+        "button": "de boutons",
+        "camera": "de caméras",
+        "input_button": "de boutons",
+        "alarm_control_panel": "d'alarmes",
+        "automation": "d'automatisations",
+        "fan": "de ventilateurs",
+        "climate": "de thermostats",
+        "humidifier": "d'humidificateurs",
+        "input_boolean": "de commutateurs",
+        "siren": "de sirènes",
+        "water_heater": "de ballon d'eau chaude",
+        "light": "de lumières",
+        "switch": "de commutateurs",
+        "script": "de scripts",
+        "remote": "de télécommandes",
+        "lock": "de verrous",
+        "vacuum": "d'aspirateurs",
+        "scene": "de scènes",
+        "media_player": "de lecteurs multimédia",
+        "lawn_mower": "de tondeuses à gazon",
+        "valve": "de vannes"
+        } %}
+      {% if domain in translations -%}
+        Désolé, je n'ai pas trouvé {{ translations[domain] }} dans cet étage
+      {%- else -%}
+        Désolé, je n'ai rien trouvé de correspondant dans cet étage
+      {%- endif %}
+    no_device_class_in_floor: |
+      {% set translations = {
+        "awning": "d'auvents",
+        "blind": "de stores",
+        "curtain": "de rideaux",
+        "door": "de portes",
+        "garage": "de portes de garage",
+        "gate": "de portes",
+        "shade": "de stores",
+        "shutter": "de volets",
+        "window": "de fenêtres"
+        } %}
+      {% if device_class in translations -%}
+        Désolé, je n'ai pas trouvé {{ translations[device_class] }} dans cet étage
+      {%- else -%}
+        Désolé, je n'ai rien trouvé de correspondant dans cet étage
+      {%- endif %}
+    no_entity_in_floor: "Désolé, je ne connais pas l'appareil {{ entity }}"
     # Errors for when user is logged in and we can give more information
     no_entity_exposed: "Désolé, l'appareil {{ entity }} n'est pas exposé"
     no_entity_in_area_exposed: "Désolé, l'appareil {{ entity }} n'est pas exposé"
@@ -197,10 +244,58 @@ responses:
       {%- else -%}
         Désolé, aucun appareil de ce type n'est exposé
       {%- endif %}
+    no_entity_in_floor_exposed: "Désolé, l'appareil {{ entity }} n'est pas exposé"
+    no_domain_in_floor_exposed: |
+      {% set translations = {
+        "button": "aucun bouton de cet étage n'est exposé",
+        "camera": "aucune caméra de cet étage n'est exposée",
+        "input_button": "aucun bouton de cet étage n'est exposé",
+        "alarm_control_panel": "aucune alarme de cet étage n'est exposée",
+        "automation": "aucune automatisation de cet étage n'est exposée",
+        "fan": "aucun ventilateur de cet étage n'est exposé",
+        "climate": "aucun thermostat de cet étage n'est exposé",
+        "humidifier": "aucun humidificateur de cet étage n'est exposé",
+        "input_boolean": "aucun commutateur de cet étage n'est exposé",
+        "siren": "aucune sirène de cet étage n'est exposée",
+        "water_heater": "aucun ballon d'eau chaude de cet étage n'est exposé",
+        "light": "aucune lumière de cet étage n'est exposée",
+        "switch": "aucun commutateur de cet étage n'est exposé",
+        "script": "aucun script de cet étage n'est exposé",
+        "remote": "aucune télécommande de cet étage n'est exposée",
+        "lock": "aucun verrou de cet étage n'est exposé",
+        "vacuum": "aucun aspirateur de cet étage n'est exposé",
+        "scene": "aucune scène de cet étage n'est exposée",
+        "media_player": "aucun lecteur multimédia de cet étage n'est exposé",
+        "lawn_mower": "aucune tondeuse à gazon de cet étage n'est exposée",
+        "valve": "aucune vanne de cet étage n'est exposée"
+        } %}
+      {% if domain in translations -%}
+        Désolé, {{ translations[domain] }}
+      {%- else -%}
+        Désolé, aucun appareil de ce type n'est exposé
+      {%- endif %}
+    no_device_class_in_floor_exposed: |
+      {% set translations = {
+        "awning": "aucun auvent de cet étage n'est exposé",
+        "blind": "aucun store de cet étage n'est exposé",
+        "curtain": "aucun rideau de cet étage n'est exposé",
+        "door": "aucune porte de cet étage n'est exposée",
+        "garage": "aucune porte de garage de cet étage n'est exposée",
+        "gate": "aucune porte de cet étage n'est exposée",
+        "shade": "aucun store de cet étage n'est exposé",
+        "shutter": "aucun volet de cet étage n'est exposé",
+        "window": "aucune fenêtre de cet étage n'est exposeé"
+        } %}
+      {% if device_class in translations -%}
+        Désolé, {{ translations[device_class] }}
+      {%- else -%}
+        Désolé, aucun appareil de ce type n'est exposé
+      {%- endif %}
 
     # Used when multiple (exposed) devices have the same name
     duplicate_entities: "Désolé, plusieurs appareils sont nommés {{entity}}"
     duplicate_entities_in_area: "Désolé, plusieurs appareils de cette pièce sont nommés {{entity}}"
+    duplicate_entities_in_floor: "Désolé, plusieurs appareils de cet étage sont nommés {{entity}}"
 
 lists:
   color:
@@ -511,7 +606,7 @@ lists:
 
 expansion_rules:
   #Common rules
-  pourcent: "(%| %| pourcent)"
+  pourcent: "(%| %| pourcent| pour cent)"
   degres: "(°| °| degré| degrés)"
   le: (le |la |les |l')
   dans: "(dans|du|de|des|à|au|aux|sur)"
@@ -524,20 +619,24 @@ expansion_rules:
   partout: ([de] partout)|(<dans> [<tous>] [<le>]<maison>)|(<dans> toutes les pièces)
 
   # Verbs
-  regle: "(règle|régler|met|mets|mettre|ajuste|ajuster|change|changer)"
-  augmente: "(augmente|augmenter|monte|monter)"
-  diminue: "(diminue|diminuer|baisse|baisser)"
+  active: "(active|activer|joue|jouer|exécute|exécuter|démarre|démarrer|lance|lancer)"
   allume: "(allume|allumer|active|activer|démarre|démarrer)"
-  eteins: "(éteint|eteint|éteins|eteins|éteindre|eteindre|désactive|désactiver|stoppe|stopper|arrête|arrêter|coupe|couper)"
-  ferme: "(ferme|fermer|baisse|baisser)"
-  ouvre: "(ouvre|ouvrir|monte|monter)"
-  eclaire: "(éclaire|éclairer|illumine|illuminer)"
-  mets: "(mets|mettre|passe|passer)"
-  renvoie: "(renvoie|renvoyer|arrête|arrêter|stop[pe]|stopper)"
-  lis: "(lis|lire|lecture)"
-  reprends: "(reprends|reprendre|reprise)"
+  augmente: "(augmente|augmenter|monte|monter)"
   demarre: "(démarre|démarrer|lance|lancer)"
-
+  diminue: "(diminue|diminuer|baisse|baisser)"
+  eclaire: "(éclaire|éclairer|illumine|illuminer)"
+  eteins: "(éteint|eteint|éteins|eteins|éteindre|eteindre|désactive|désactiver|stoppe|stopper|arrête|arrêter|coupe|couper|<eteins_dirty>)"
+  ferme: "(ferme|fermer|baisse|baisser)"
+  lis: "(lis|lire|lecture)"
+  mets: "(mets|mettre|passe|passer|mets_dirty)"
+  ouvre: "(ouvre|ouvrir|monte|monter)"
+  regle: "(règle|régler|met|mets|mettre|ajuste|ajuster|change|changer|mets_dirty)"
+  renvoie: "(renvoie|renvoyer|arrête|arrêter|stop[pe]|stopper)"
+  reprends: "(reprends|reprendre|reprise)"
+  # We have some heavy STT limitations today. "Éteins" is often misunderstood as a different word. Because it's such a commun action, we're willing to support this hack for now. Ideally this should be removed once we have a better STT engine. Hence the fact that we decided to put it on a different expansion rules. The goal of this expansion rule is to be removed in the future.
+  eteins_dirty: "(étant|étends|étend|étendre|état|et tant|et teins|et teint|et teints|et t'as|été|étais|était)"
+  # We have some heavy STT limitations today. "mets|met|mettre" is often misunderstood as a different word. Because it's such a commun action, we're willing to support this hack for now. Ideally this should be removed once we have a better STT engine. Hence the fact that we decided to put it on a different expansion rules. The goal of this expansion rule is to be removed in the future.
+  mets_dirty: "(mais|maître)"
   # Domains and Things
   lumiere: "(lumière|lampe|ampoule)"
   lumieres: "(lumières|lampes|ampoules)"
